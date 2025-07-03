@@ -19,7 +19,7 @@ export default function UploadPage() {
     // Upload file to Supabase Storage
     const fileName = `${Date.now()}-${file.name}`
     const { data: fileData, error: fileError } = await supabase.storage
-      .from('products')
+      .from('marketplace-products')
       .upload(fileName, file)
 
     if (fileError) {
