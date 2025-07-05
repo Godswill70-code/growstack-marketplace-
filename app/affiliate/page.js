@@ -126,16 +126,14 @@ export default function AffiliatePage() {
 </button>
 
             <ul>
-              {sales.map((sale, idx) => (
-                <li key={idx} style={{ marginTop: '1rem', border: '1px solid #ccc', padding: '1rem', borderRadius: '6px' }}>
-                  <p><strong>Product:</strong> {sale.products?.title}</p>
-                  <p><strong>Commission:</strong> ₦{(sale.products?.price * 0.6).toFixed(2)}</p>
-                </li>
-              ))}
-            </ul>
-          </>
-        )}
-      </div>
+  {sales.map((sale, idx) => (
+    <li key={idx} style={{ marginTop: '1rem', border: '1px solid #ccc', padding: '1rem', borderRadius: '6px' }}>
+      <p><strong>Product:</strong> {sale.products && sale.products.title}</p>
+      <p><strong>Commission:</strong> ₦{sale.products && (sale.products.price * 0.6).toFixed(2)}</p>
+    </li>
+  ))}
+</ul>
+        
     </div>
   );
 }
