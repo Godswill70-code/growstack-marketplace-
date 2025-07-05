@@ -39,7 +39,22 @@ export default function Marketplace() {
             <h3>{product.title}</h3>
             <p>{product.description}</p>
             <button
-              onClick={() => alert('Payment integration coming soon!')}
+  onClick={() => {
+    window.location.href = `/checkout?id=${product.id}`;
+  }}
+  style={{
+    backgroundColor: '#22c55e',
+    padding: '10px 20px',
+    border: 'none',
+    color: 'white',
+    cursor: 'pointer',
+    borderRadius: '5px',
+    marginTop: '10px'
+  }}
+>
+  Buy Now
+</button>
+   
               style={{
                 backgroundColor: '#22c55e',
                 padding: '10px 20px',
