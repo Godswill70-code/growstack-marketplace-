@@ -12,21 +12,43 @@ export default function SignupPage() {
   const [error, setError] = useState('');
 
   const handleSignup = async () => {
-    setLoading(true);
-    setError('');
-    const { error } = await supabase.auth.signUp({
-      email,
-      password
-    });
+  setLoading(true);
+  setError('');
 
-    if (error) {
-      setError(error.message);
-    } else {
-      alert('Signup successful! Check your email for confirmation.');
-      router.push('/login');
-    }
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password
+  });
 
+  if (error) {
+    setError(error.message);
     setLoading(false);
+    return;
+  }
+
+  const user = data.user;
+
+  // Generate a unique referral ID
+  const referral_id = 'user_' + Math.random().toString(36).substring(2, 8);
+
+  // Save to users table
+  const { error: insertError } = await supabase.from('users').insert([
+    {
+      id: user?.id,
+      referral_id,
+      role: 'affiliate',
+      created_at: new Date(),
+      updated_at: new Date()
+    }
+  ]);
+
+  if (insertError) {
+    console.error('Error saving referral ID:', insertError.message);
+  }
+
+  alert('Signup successful! Check your email for confirmation.');
+  router.push('/login');
+  setLoading(false);
   };
 
   return (
