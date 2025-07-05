@@ -3,6 +3,13 @@ import { useEffect, useState } from 'react'
 import { supabase } from '@/utils/supabaseClient'
 
 export default function Marketplace() {
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const ref = urlParams.get('ref');
+    if (ref) {
+      localStorage.setItem('referral_id', ref);
+    }
+  }, []);
   const [products, setProducts] = useState([])
 
   useEffect(() => {
