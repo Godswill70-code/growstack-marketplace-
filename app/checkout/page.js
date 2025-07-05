@@ -6,10 +6,16 @@ import { supabase } from '@/utils/supabaseClient';
 export default function CheckoutPage() {
   const [message, setMessage] = useState('');
   const searchParams = useSearchParams();
+  const [session, setSession] = useState(null);
 
   useEffect(() => {
     const logPurchase = async () => {
-      const product_id = searchParams.get('id');
+      const { data: { session } } = await supabase.auth.getSession();
+setSession(session);
+
+const product_id = searchParams.get('id');
+const referral_id = localStorage.getItem('referral_id') || null;
+const buyer_email = session?.user?.email || 'guest@example.com';
       const referral_id = localStorage.getItem('referral_id') || null;
 
       if (!product_id) {
@@ -20,7 +26,7 @@ export default function CheckoutPage() {
       const { error } = await supabase.from('sales').insert([
         {
           product_id,
-          buyer_email: 'test@example.com', // Replace later with real email from login
+          buyer_email, // Replace later with real email from login
           referral_id,
         },
       ]);
