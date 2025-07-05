@@ -94,6 +94,24 @@ export default function AffiliatePage() {
           <>
             <p><strong>Total Sales:</strong> {sales.length}</p>
             <p><strong>Total Earnings:</strong> ₦{totalEarnings.toFixed(2)}</p>
+          {totalEarnings > 0 && (
+  <button
+    onClick={() =>
+      alert(`✅ Your payout request of ₦${totalEarnings.toFixed(2)} has been sent!`)
+    }
+    style={{
+      backgroundColor: '#4f46e5',
+      color: '#fff',
+      padding: '10px 20px',
+      border: 'none',
+      borderRadius: '5px',
+      marginTop: '20px',
+      cursor: 'pointer'
+    }}
+  >
+    💵 Request Payout of ₦{totalEarnings.toFixed(2)}
+  </button>
+)}
 
             <ul>
               {sales.map((sale, idx) => (
