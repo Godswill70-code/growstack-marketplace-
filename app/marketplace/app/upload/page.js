@@ -1,14 +1,34 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { supabase } from '@/utils/supabaseClient'
 import { useRouter } from 'next/navigation'
 
 export default function UploadPage() {
+  const [session, setSession] = useState(null)
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [price, setPrice] = useState('')
   const [file, setFile] = useState(null)
   const router = useRouter()
+
+  useEffect(() => {
+    const getSession = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession()
+      setSession(session)
+
+      if (!session) {
+        router.push('/login') // 🔐 Redirect if not logged in
+      }
+    }
+
+    getSession()
+  }, [])
+
+  if (!session) {
+    return <p>Loading...</p> // Optional loading message
+  }
 
   const handleUpload = async (e) => {
     e.preventDefault()
