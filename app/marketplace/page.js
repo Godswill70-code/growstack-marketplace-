@@ -51,7 +51,7 @@ const [search, setSearch] = useState('')
   }}
 />
       <div style={{ display: 'grid', gap: '1rem' }}>
-        {filteredproducts.map(product => (
+        {filteredProducts.map(product => (
           <div
             key={product.id}
             style={{
@@ -79,21 +79,6 @@ const [search, setSearch] = useState('')
 >
   Buy Now
 </button>
-   
-              style={{
-                backgroundColor: '#22c55e',
-                padding: '10px 20px',
-                border: 'none',
-                color: 'white',
-                cursor: 'pointer',
-                borderRadius: '5px',
-                marginTop: '10px'
-              }}
-            >
-              Buy Now
-            </button>
-          </div>
-        ))}
       </div>
     </main>
   )
