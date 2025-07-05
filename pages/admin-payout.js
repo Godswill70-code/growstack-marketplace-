@@ -1,6 +1,46 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/utils/supabaseClient';
+import { useRouter } from 'next/navigation';
+
+export default function AdminPayoutPage() {
+  const [session, setSession] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [requests, setRequests] = useState([]);
+  const router = useRouter();
+
+  useEffect(() => {
+    const init = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      const userEmail = session?.user?.email;
+
+      // ✅ Replace this with YOUR admin email
+      const adminEmail = 'growstack1@gmail.com';
+
+      if (!userEmail || userEmail !== adminEmail) {
+        alert('⛔ Unauthorized: Admins only');
+        router.push('/');
+        return;
+      }
+
+      setSession(session);
+      fetchRequests();
+    };
+
+    const fetchRequests = async () => {
+      const { data, error } = await supabase
+        .from('payout_requests')
+        .select('*')
+        .order('requested_at', { ascending: false });
+
+      if (!error) setRequests(data);
+      setLoading(false);
+    };
+
+    init();
+  }, []);
+
+  // The rest of your component continues here…
 
 export default function AdminPayoutPage() {
   const [requests, setRequests] = useState([]);
