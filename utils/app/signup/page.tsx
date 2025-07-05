@@ -19,6 +19,14 @@ export default function SignupPage() {
     email,
     password
   });
+  const { data: { user } } = await supabase.auth.getUser();
+
+await supabase.from('users').insert([
+  {
+    email: user?.email,
+    role: 'buyer'
+  }
+]);
 
   if (error) {
     setError(error.message);
