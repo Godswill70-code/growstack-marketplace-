@@ -16,8 +16,8 @@ setSession(session);
 const product_id = searchParams.get('id');
 const referral_id = localStorage.getItem('referral_id') || null;
 const buyer_email = session?.user?.email || 'guest@example.com';
-      const referral_id = localStorage.getItem('referral_id') || null;
 
+      
       if (!product_id) {
         setMessage('❌ Product ID not found.');
         return;
