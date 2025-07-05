@@ -63,6 +63,61 @@ export default function PurchaseHistoryPage() {
             <p><strong>Status:</strong> Purchased ✅</p>
           </div>
         ))}
+
+          <div style={{ marginTop: '2rem' }}>
+  <h2>Want to earn too?</h2>
+
+  <button
+    onClick={async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      const email = session?.user?.email;
+
+      if (email) {
+        await supabase
+          .from('users')
+          .update({ role: 'creator' })
+          .eq('email', email);
+        alert('✅ You are now a creator! Go to your dashboard to upload products.');
+      }
+    }}
+    style={{
+      backgroundColor: '#0ea5e9',
+      color: '#fff',
+      padding: '10px 20px',
+      border: 'none',
+      borderRadius: '6px',
+      marginRight: '10px',
+      cursor: 'pointer'
+    }}
+  >
+    Become a Creator
+  </button>
+
+  <button
+    onClick={async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      const email = session?.user?.email;
+
+      if (email) {
+        await supabase
+          .from('users')
+          .update({ role: 'affiliate' })
+          .eq('email', email);
+        alert('✅ You are now an affiliate! Commission dashboard coming soon.');
+      }
+    }}
+    style={{
+      backgroundColor: '#10b981',
+      color: '#fff',
+      padding: '10px 20px',
+      border: 'none',
+      borderRadius: '6px',
+      cursor: 'pointer'
+    }}
+  >
+    Join Affiliate Program
+  </button>
+</div>
     </main>
   );
     }
